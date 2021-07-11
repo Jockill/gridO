@@ -6,7 +6,7 @@
 */
 #include <curses.h>
 
-//Cell apparence
+/* Cell apparence */
 #define CELL_CORNER "+" /*!< Cell corner apparence */
 // (2y size recommended on default settings)
 #define CELL_WIDTH 2 /*!< Cell x-edge size */
@@ -15,6 +15,19 @@
 #define CELL_XAXE "-" /*!< Cell x-axis edge apparence */
 #define CELL_YAXE "|" /*!< Cell y-axis edge apparence */
 
+/* Color related */
+// #define BG_COLOR COLOR_BLACK
+#define COLOR_ORANGE 60
+#define COLOR_PINK 80
+#define CLR_YLW 1
+#define CLR_BLU 2
+#define CLR_RED 3
+#define CLR_GRN 4
+#define CLR_WHT 5
+#define CLR_ORG 6
+#define CLR_VLT 7
+#define CLR_PNK 8
+#define CLR_CYN 9
 
 /******************************************************************************/
 /*********************************** UTILS ************************************/
@@ -161,7 +174,8 @@ int gp_cellPrint(int x, int y, char* content)
 
 	for (int iy=yGridToReal(y)+1; iy<CELL_HEIGHT+yGridToReal(y)+1; iy++)
 	{
-		for (int ix=xGridToReal(x)+1; ix<CELL_WIDTH+xGridToReal(x)+1; ix++)
+		for (int ix=xGridToReal(x)+1;
+			 ix<CELL_WIDTH+xGridToReal(x)+1; ix++)
 		{
 			if (istr < len)
 				mvprintw(iy, ix, "%c", content[istr++]);
@@ -186,10 +200,35 @@ int gp_clearCell(int x, int y)
 	for (int iy=yGridToReal(y)+1; iy<CELL_HEIGHT+yGridToReal(y)+1; iy++)
 	{
 		//Through y-axis
-		for (int ix=xGridToReal(x)+1; ix<CELL_WIDTH+xGridToReal(x)+1; ix++)
+		for (int ix=xGridToReal(x)+1;
+			 ix<CELL_WIDTH+xGridToReal(x)+1; ix++)
 		{
 			mvprintw(iy, ix, " ");
 		}
 	}
 	return 0;
+}
+
+
+/******************************************************************************/
+/******************************* COLOR HANDLING *******************************/
+/******************************************************************************/
+
+/*!
+   \brief Init color pairs to be used later
+   \return "Return of the function"
+*/
+void init_colorpairs()
+{
+	init_pair(CLR_YLW, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(CLR_BLU, COLOR_BLUE, COLOR_BLACK);
+	init_pair(CLR_RED, COLOR_RED, COLOR_BLACK);
+	init_pair(CLR_GRN, COLOR_GREEN, COLOR_BLACK);
+	init_pair(CLR_WHT, COLOR_WHITE, COLOR_BLACK);
+	init_color(COLOR_ORANGE, 1000, 500, 0);
+	init_pair(CLR_ORG, COLOR_ORANGE, COLOR_BLACK);
+	init_pair(CLR_VLT, COLOR_MAGENTA, COLOR_BLACK);
+	init_color(COLOR_PINK, 1000, 411, 705);
+	init_pair(CLR_PNK, COLOR_PINK, COLOR_BLACK);
+	init_pair(CLR_CYN, COLOR_CYAN, COLOR_BLACK);
 }
